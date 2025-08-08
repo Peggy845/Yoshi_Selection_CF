@@ -1,0 +1,19 @@
+function doGet() {
+  const ss = SpreadsheetApp.openById('1KXmggPfKqpg5gZCsUujlpdTcKSFdGJHv4bOux3nc2xo');
+  const sheet = ss.getSheetByName('分類圖片');
+  const data = sheet.getDataRange().getValues();
+  const categoryImages = [];
+
+  for (let i = 1; i < data.length; i++) {
+    categoryImages.push({
+      mainCat: data[i][0],
+      mainImg: data[i][1],
+      subCat: data[i][2],
+      subImg: data[i][3]
+    });
+  }
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ categoryImages })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
